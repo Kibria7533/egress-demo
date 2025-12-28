@@ -1,17 +1,17 @@
 apiVersion: networking.istio.io/v1beta1
 kind: ServiceEntry
 metadata:
-  name: nid-nodeport
+  name: nid-service
   namespace: ec-eg
 spec:
   hosts:
     - nid.internal.local
+  location: MESH_EXTERNAL
+  resolution: STATIC
   ports:
     - number: 32000
       name: http
       protocol: HTTP
-  location: MESH_EXTERNAL
-  resolution: STATIC
   endpoints:
     - address: 192.168.1.125
       ports:
