@@ -1,18 +1,18 @@
 apiVersion: networking.istio.io/v1beta1
 kind: ServiceEntry
 metadata:
-  name: se-debian-repos
+  name: nid-nodeport
   namespace: ec-eg
 spec:
   hosts:
-    - deb.debian.org
-    - security.debian.org
+    - nid.internal.local
   ports:
-    - number: 80
+    - number: 32000
       name: http
       protocol: HTTP
-    - number: 443
-      name: https
-      protocol: TLS
   location: MESH_EXTERNAL
-  resolution: DNS
+  resolution: STATIC
+  endpoints:
+    - address: 192.168.1.125
+      ports:
+        http: 32000

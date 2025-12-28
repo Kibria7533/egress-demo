@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: nid-egress-gw-route
+  namespace: ec-eg
+spec:
+  hosts:
+    - nid.internal.local
+  gateways:
+    - istio-system/nid-egress-gw
+  http:
+    - route:
+        - destination:
+            host: nid.internal.local
+            port:
+              number: 32000

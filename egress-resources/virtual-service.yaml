@@ -1,0 +1,18 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: nid-egress
+  namespace: ec-eg
+spec:
+  hosts:
+    - nid.internal.local
+  gateways:
+    - mesh
+  http:
+    - match:
+        - port: 32000
+      route:
+        - destination:
+            host: istio-egressgateway.istio-system.svc.cluster.local
+            port:
+              number: 80
