@@ -18,5 +18,5 @@ variables:
   serviceNodePort: 32000
 
   #app buil image
-  imageRepository: "01720588884/egress-nid-service"
+  imageRepository: "01720588884/nid-service"
 
