@@ -27,7 +27,7 @@ jobs:
       # Build and push ec-service with version from values.yaml
       - name: Build and push ec-service
         run: |
-          IMAGE_VERSION=$(yq eval '.variables.imageAppVersion' ./ec-service/deploy/values.yaml)
+          IMAGE_VERSION=$(yq e '.variables.imageAppVersion' ./ec-service/deploy/values.yaml)
           echo "Building ec-service:$IMAGE_VERSION"
           docker build -t ${{ secrets.DOCKER_USER }}/ec-service:$IMAGE_VERSION -f ec-service/Dockerfile ec-service
           docker push ${{ secrets.DOCKER_USER }}/ec-service:$IMAGE_VERSION
@@ -35,7 +35,7 @@ jobs:
       # Build and push nid-service with version from values.yaml
       - name: Build and push nid-service
         run: |
-          IMAGE_VERSION=$(yq eval '.variables.imageAppVersion' ./nid-service/deploy/values.yaml)
+          IMAGE_VERSION=$(yq e '.variables.imageAppVersion' ./nid-service/deploy/values.yaml)
           echo "Building nid-service:$IMAGE_VERSION"
           docker build -t ${{ secrets.DOCKER_USER }}/nid-service:$IMAGE_VERSION -f nid-service/Dockerfile nid-service
           docker push ${{ secrets.DOCKER_USER }}/nid-service:$IMAGE_VERSION
