@@ -1,19 +1,16 @@
-# Debian-based Node image (glibc, stable)
 FROM node:20-bookworm-slim
 
 WORKDIR /app
 
-# Copy package files first for better layer caching
+# Install curl at build time
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends curl ca-certificates \
+  && rm -rf /var/lib/apt/lists/*
+
 COPY package*.json ./
+RUN npm install --production
 
-# Install dependencies
-RUN npm install
-
-# Copy app source
 COPY . .
 
-# Expose your app port
 EXPOSE 3000
-
-# Run app
 CMD ["node", "server.js"]
