@@ -1,20 +1,19 @@
-# Use official Node.js LTS image
-FROM node:20-alpine
+# Debian-based Node image (glibc, stable)
+FROM node:20-bookworm-slim
 
-# Create app directory
 WORKDIR /app
 
-# Copy package files first (better caching)
+# Copy package files first for better layer caching
 COPY package*.json ./
 
 # Install dependencies
-RUN npm install 
+RUN npm install
 
-# Copy app source code
+# Copy app source
 COPY . .
 
-# Expose app port
+# Expose your app port
 EXPOSE 3000
 
-# Start the app
+# Run app
 CMD ["node", "server.js"]
