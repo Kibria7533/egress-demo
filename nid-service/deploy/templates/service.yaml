@@ -6,6 +6,7 @@ spec:
   selector:
     app: {{ .Chart.Name }}
   type: {{ .Values.variables.serviceType }}
+  externalTrafficPolicy: Local
   ports:
     - name: http
       protocol: TCP
