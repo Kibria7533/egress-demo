@@ -1,0 +1,81 @@
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: dr-egressgateway
+  namespace: istio-system
+spec:
+  host: istio-egressgateway.istio-system.svc.cluster.local
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: nid-egress-gw
+  namespace: istio-system
+spec:
+  selector:
+    istio: egressgateway
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - nid.internal.local
+---
+apiVersion: networking.istio.io/v1beta1
+kind: ServiceEntry
+metadata:
+  name: nid-service
+  namespace: ec-eg
+spec:
+  hosts:
+    - nid.internal.local
+  location: MESH_EXTERNAL
+  resolution: STATIC
+  ports:
+    - number: 32000
+      name: http
+      protocol: HTTP
+  endpoints:
+    - address: 192.168.1.125
+      ports:
+        http: 32000
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: nid-egress
+  namespace: ec-eg
+spec:
+  hosts:
+    - nid.internal.local
+  gateways:
+    - mesh
+  http:
+    - match:
+        - port: 32000
+      route:
+        - destination:
+            host: istio-egressgateway.istio-system.svc.cluster.local
+            port:
+              number: 80
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: nid-egress-gw-route
+  namespace: ec-eg
+spec:
+  hosts:
+    - nid.internal.local
+  gateways:
+    - istio-system/nid-egress-gw
+  http:
+    - route:
+        - destination:
+            host: nid.internal.local
+            port:
+              number: 32000

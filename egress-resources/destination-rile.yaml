@@ -1,10 +1,10 @@
 apiVersion: networking.istio.io/v1beta1
 kind: DestinationRule
 metadata:
-  name: dr-egressgateway
-  namespace: istio-system
+  name: dr-nid-disable-tls
+  namespace: ec-eg
 spec:
-  host: istio-egressgateway.istio-system.svc.cluster.local
+  host: nid.internal.local
   trafficPolicy:
     tls:
-      mode: ISTIO_MUTUAL
+      mode: DISABLE
