@@ -8,6 +8,10 @@ RUN apt-get update && \
         curl \
         telnet \
         netcat-openbsd \
+        dnsutils \
+        iproute2 \
+        iputils-ping \
+        tcpdump \
         ca-certificates && \
     rm -rf /var/lib/apt/lists/*
 

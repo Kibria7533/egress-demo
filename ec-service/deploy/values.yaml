@@ -1,7 +1,7 @@
 
 variables:
 
-  imageAppVersion: "1.0.3"
+  imageAppVersion: "1.0.4"
 
   # increase this when you need scale up
   replicaCount: 1
