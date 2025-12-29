@@ -2,7 +2,7 @@ FROM node:20-bookworm-slim
 
 WORKDIR /app
 
-# Install curl + telnet (and optional netcat for testing)
+# Install debugging tools
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         curl \
@@ -11,6 +11,7 @@ RUN apt-get update && \
         dnsutils \
         iproute2 \
         iputils-ping \
+        traceroute \
         tcpdump \
         ca-certificates && \
     rm -rf /var/lib/apt/lists/*
