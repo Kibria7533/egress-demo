@@ -8,8 +8,8 @@ spec:
     istio: egressgateway
   servers:
     - port:
-        number: 80
-        name: http
+        number: 32000
+        name: http-nid
         protocol: HTTP
       hosts:
         - nid.internal.local
