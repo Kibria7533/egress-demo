@@ -13,6 +13,6 @@ spec:
         - port: 32000
       route:
         - destination:
-            host: istio-egressgateway.istio-system.svc.cluster.local
+            host: nid.internal.local
             port:
               number: 32000

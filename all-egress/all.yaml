@@ -1,13 +1,13 @@
 apiVersion: networking.istio.io/v1beta1
 kind: DestinationRule
 metadata:
-  name: dr-egressgateway
-  namespace: istio-system
+  name: dr-nid-disable-tls
+  namespace: ec-eg
 spec:
-  host: istio-egressgateway.istio-system.svc.cluster.local
+  host: nid.internal.local
   trafficPolicy:
     tls:
-      mode: ISTIO_MUTUAL
+      mode: DISABLE
 ---
 apiVersion: networking.istio.io/v1beta1
 kind: Gateway
@@ -19,8 +19,8 @@ spec:
     istio: egressgateway
   servers:
     - port:
-        number: 80
-        name: http
+        number: 32000
+        name: http-nid
         protocol: HTTP
       hosts:
         - nid.internal.local
@@ -59,9 +59,10 @@ spec:
         - port: 32000
       route:
         - destination:
-            host: istio-egressgateway.istio-system.svc.cluster.local
+            host: nid.internal.local
             port:
-              number: 80
+              number: 32000
+
 ---
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
